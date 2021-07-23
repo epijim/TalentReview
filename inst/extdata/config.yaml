@@ -1,0 +1,9 @@
+job_levels:
+  ds: Data Scientist
+  sds: Senior DS
+  pds: Principal DS
+  eds: Expert DS
+draft_eoy_rating:
+  - Needs improvement
+  - Adequate
+  - Superstar
