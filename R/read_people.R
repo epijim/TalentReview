@@ -13,7 +13,6 @@
 #' the function [enrich_people()] to tidy up the data.
 #' @export
 #'
-
 read_people <- function(
   path = ".",
   exclude = c("config.yaml")
@@ -51,8 +50,11 @@ read_people <- function(
 #' @param j Name of the person to extract
 #'
 #' @noRd
-
 hlp_extract_person <- function(manager_data, j, manager){
+  # input data has hard coded fixed format
+  value <- name <- job_level <- NULL
+
+# function
   j_all_roles <- manager_data[[j]]$job_levels %>%
     extract_nested %>%
     dplyr::mutate(
@@ -61,10 +63,15 @@ hlp_extract_person <- function(manager_data, j, manager){
       manager = manager
     )
 
+  photo_url <- manager_data[[j]]$photo_url
+
+  if (is.null(photo_url)) photo_url <- paste0("https://i.pravatar.cc/150?img=",round(runif(n = 1,0,50)))
+
   # Make tibble with person data
   tibble::tibble(
     name = j,
     userid = manager_data[[j]]$userid,
+    photo_url = photo_url,
     job_level = j_all_roles %>%
       dplyr::filter(order == max(order)) %>%
       dplyr::pull(job_level),
@@ -72,30 +79,16 @@ hlp_extract_person <- function(manager_data, j, manager){
       dplyr::filter(order == max(order)) %>%
       dplyr::pull(value),
     draft_eoy_rating = manager_data[[j]]$draft_eoy_rating,
-    promotion_readiness = manager_data[[j]]$promotion_readiness,
+    promotion_readiness = as.character(manager_data[[j]]$promotion_readiness),
 
     highlights = list(manager_data[[j]]$highlights),
     key_dev_areas = list(manager_data[[j]]$key_dev_areas)
   )
 }
 
-#' Extract nested
-#'
-#' Takes out the named vector and gives back tibble with order as col
-#'
-#' @param data List from YAML
-#'
-#' @noRd
-extract_nested <- function(data){
-  data %>%
-    tibble::enframe(.) %>%
-    tidyr::unnest(
-      cols = c(value)
-    ) %>%
-    dplyr::mutate(
-      order = dplyr::row_number()
-    )
-}
+
+
+
 
 
 
