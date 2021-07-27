@@ -7,3 +7,13 @@ draft_eoy_rating:
   - Needs improvement
   - Adequate
   - Superstar
+valid_colours:
+  - teal
+  - lightblue
+  - navy
+  - purple
+  - fuchsia
+  - pink
+  - orange
+  - lime
+  - indigo
