@@ -19,4 +19,7 @@ Suggests:
     yaml
 Config/testthat/edition: 3
 Imports: 
-    magrittr
+    tibble,
+    magrittr,
+    tidyr,
+    rlang
