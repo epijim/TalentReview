@@ -1,5 +1,6 @@
 Elaine Loyd:
   userid: loyde
+  photo_url: https://i.pravatar.cc/150?img=41
   job_levels:
     ds: 2018-02-02
     sds: 2020-01-05
@@ -30,10 +31,10 @@ Kelly Cosby:
   draft_eoy_rating: Superstar
   promotion_readiness: Feb 2022
 
-Claude Houston:
-  userid: houstonc
+Ronan DeBlazio:
+  userid: deblasior
   job_levels:
-    sds: 2020-05-02
+    sds: 2020-09-02
   highlights:
     - Learnt to sew, then applied new skills on an amazing new jumper with knitted panaroma of sunset over Big Sur.
     - Led first project, working with that other department.
@@ -43,4 +44,4 @@ Claude Houston:
     - Looking to be challenged working with matrix teams, as usually internally focussed.
     - Stop dialling into meetings using selfie-camera, to prevent colleagues getting sea sickness.
   draft_eoy_rating: Superstar
-  promotion_readiness: Sep 2021
+  promotion_readiness: NA

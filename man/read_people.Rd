@@ -18,7 +18,6 @@ and dev areas are nested vectors within a cell. See
 the function \code{\link[=enrich_people]{enrich_people()}} to tidy up the data.
 }
 \description{
-\Sexpr[results=rd, stage=render]{lifecycle::badge("questioning")}
 \code{read_people()} allows you to pull in data from the YAML files that
 contain info on your team.
 }

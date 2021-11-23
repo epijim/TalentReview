@@ -1,0 +1,7 @@
+url: https://pkgdown.r-lib.org
+authors:
+  James Black:
+    href: https://epijim.uk
+template:
+  params:
+    bootswatch: cerulean

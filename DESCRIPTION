@@ -1,22 +1,24 @@
 Package: TalentReview
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Keep a running set of cards on your team for talent review discussions
+Version: 0.1
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "James",
+           family = "Black",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "james.black.jb2@roche.com")
+Description: Keep a running set of cards on your team for talent review discussions
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     dplyr,
     testthat (>= 3.0.0),
     yaml
 Config/testthat/edition: 3
 Imports: 
-    magrittr
+    tibble,
+    magrittr,
+    tidyr,
+    rlang
