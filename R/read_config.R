@@ -1,7 +1,6 @@
 #' Read in the formatted 'config' YAML
 #'
 #' @description
-#' \Sexpr[results=rd, stage=render]{lifecycle::badge("questioning")}
 #' `read_config()` pulls in the config file, that has info like what
 #' are the different roles, and allowable values for some parameters (for CICD).
 #'

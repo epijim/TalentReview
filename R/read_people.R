@@ -1,7 +1,6 @@
 #' Read in the formatted 'people' YAMLs
 #'
 #' @description
-#' \Sexpr[results=rd, stage=render]{lifecycle::badge("questioning")}
 #' `read_people()` allows you to pull in data from the YAML files that
 #' contain info on your team.
 #'

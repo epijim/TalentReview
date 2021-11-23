@@ -15,7 +15,6 @@ lookups.
 See the function \code{\link[=enrich_people]{enrich_people()}} to tidy up the data.}
 }
 \description{
-\Sexpr[results=rd, stage=render]{lifecycle::badge("questioning")}
 \code{read_config()} pulls in the config file, that has info like what
 are the different roles, and allowable values for some parameters (for CICD).
 }

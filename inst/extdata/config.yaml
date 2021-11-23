@@ -10,10 +10,21 @@ draft_eoy_rating:
 valid_colours:
   - teal
   - lightblue
-  - navy
-  - purple
-  - fuchsia
-  - pink
-  - orange
-  - lime
-  - indigo
+  - teal
+  - lightblue
+  - teal
+  - lightblue
+  - teal
+  - lightblue
+  - teal
+  - teal
+  # Above will alternate the colours :) below are some valid colours
+  # - lightblue
+  # - navy
+  # - purple
+  # - fuchsia
+  # - pink
+  # - orange
+  # - lime
+  # - indigo
+
