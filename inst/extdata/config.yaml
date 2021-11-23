@@ -7,3 +7,24 @@ draft_eoy_rating:
   - Needs improvement
   - Adequate
   - Superstar
+valid_colours:
+  - teal
+  - lightblue
+  - teal
+  - lightblue
+  - teal
+  - lightblue
+  - teal
+  - lightblue
+  - teal
+  - teal
+  # Above will alternate the colours :) below are some valid colours
+  # - lightblue
+  # - navy
+  # - purple
+  # - fuchsia
+  # - pink
+  # - orange
+  # - lime
+  # - indigo
+

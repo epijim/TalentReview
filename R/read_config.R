@@ -1,7 +1,6 @@
 #' Read in the formatted 'config' YAML
 #'
 #' @description
-#' \Sexpr[results=rd, stage=render]{lifecycle::badge("questioning")}
 #' `read_config()` pulls in the config file, that has info like what
 #' are the different roles, and allowable values for some parameters (for CICD).
 #'
@@ -20,24 +19,26 @@ read_config <- function(
   config <- yaml::read_yaml(file.path(path,file))
 
   job_levels <- config$job_levels %>%
-    tibble::enframe(.) %>%
-    tidyr::unnest(
-      cols = c(value)
+    extract_nested()
+
+  eoy_rating_levels <- tibble::tibble(
+    name = config$draft_eoy_rating
     ) %>%
     dplyr::mutate(
       order = dplyr::row_number()
     )
 
-  eoy_rating_levels <- tibble::tibble(
-    name = config$draft_eoy_rating
-  ) %>%
+  valid_colours <- tibble::tibble(
+    name = config$valid_colours
+    ) %>%
     dplyr::mutate(
       order = dplyr::row_number()
     )
 
   list(
     "job_levels" = job_levels,
-    "eoy_rating_levels" = eoy_rating_levels
+    "eoy_rating_levels" = eoy_rating_levels,
+    "valid_colours" = valid_colours
   )
 }
 
