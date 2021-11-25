@@ -1,6 +1,6 @@
 Package: TalentReview
 Title: Keep a running set of cards on your team for talent review discussions
-Version: 0.1
+Version: 0.2
 Authors@R: 
     person(given = "James",
            family = "Black",
