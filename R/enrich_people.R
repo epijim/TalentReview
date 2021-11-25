@@ -41,9 +41,9 @@ enrich_people <- function(
     dplyr::left_join(
       config$eoy_rating_levels %>%
         dplyr::select(
-          draft_eoy_rating = name, draft_eoy_rating_order = order
+          eoy_ratings = name, eoy_rating_order = order
         ),
-      by = "draft_eoy_rating"
+      by = c("eoy_rating_clean" = "eoy_ratings")
     )  %>%
     dplyr::mutate(
       month_in_role = round(as.numeric(Sys.Date() - as.Date(started_role))/30.25,1),
@@ -56,8 +56,8 @@ enrich_people <- function(
       job_order, month_in_role
     ) %>%
     dplyr::mutate(
-      draft_eoy_rating_badge = glue::glue(
-        '<span class="right badge badge-secondary" status="secondary">{draft_eoy_rating}</span>'
+      eoy_rating_badge = glue::glue(
+        '<span class="right badge badge-secondary" status="secondary">{eoy_rating}</span>'
       ),
       promotion_badge = dplyr::case_when(
 
