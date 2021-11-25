@@ -28,6 +28,40 @@ enrich_people <- function(
     dplyr::slice(1:nrow(config$job_levels)) %>%
     dplyr::pull(name)
 
+  # tidy ratings
+  people <- people %>%
+    left_join(
+      people %>%
+        dplyr::select(userid, eoy_rating) %>%
+        dplyr::mutate(
+          rating = strsplit(as.character(eoy_rating), "/")
+        ) %>%
+        tidyr::unnest(rating) %>%
+        mutate(trimws(rating)) %>%
+        dplyr::left_join(
+          config$eoy_rating_levels,
+          by = c("rating" = "name")
+        ) %>%
+        dplyr::group_by(userid) %>%
+        dplyr::mutate(
+          rating_average = mean(order)
+        ) %>% dplyr::arrange(desc(order)) %>% dplyr::slice(1) %>%
+        dplyr::mutate(
+          eoy_rating_formatted = dplyr::case_when(
+            order == rating_average ~ rating,
+            order < rating_average ~ paste(rating,"(borderline higher)"), # not posss?
+            order > rating_average ~ paste(rating,"(borderline lower)")
+          )
+        ) %>%
+        select(userid,eoy_rating_formatted,eoy_rating_clean = rating),
+      by = "userid"
+    )
+
+
+
+
+  # clean everything else
+
   people %>%
     dplyr::left_join(
       config$job_levels %>%
