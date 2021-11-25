@@ -4,3 +4,5 @@ docs
 .Rdata
 .httr-oauth
 .DS_Store
+
+inst/extdata/scratch.R
