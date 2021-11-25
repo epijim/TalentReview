@@ -28,6 +28,40 @@ enrich_people <- function(
     dplyr::slice(1:nrow(config$job_levels)) %>%
     dplyr::pull(name)
 
+  # tidy ratings
+  people <- people %>%
+    left_join(
+      people %>%
+        dplyr::select(userid, eoy_rating) %>%
+        dplyr::mutate(
+          rating = strsplit(as.character(eoy_rating), "/")
+        ) %>%
+        tidyr::unnest(rating) %>%
+        mutate(trimws(rating)) %>%
+        dplyr::left_join(
+          config$eoy_rating_levels,
+          by = c("rating" = "name")
+        ) %>%
+        dplyr::group_by(userid) %>%
+        dplyr::mutate(
+          rating_average = mean(order)
+        ) %>% dplyr::arrange(desc(order)) %>% dplyr::slice(1) %>%
+        dplyr::mutate(
+          eoy_rating_formatted = dplyr::case_when(
+            order == rating_average ~ rating,
+            order < rating_average ~ paste(rating,"(borderline higher)"), # not posss?
+            order > rating_average ~ paste(rating,"(borderline lower)")
+          )
+        ) %>%
+        select(userid,eoy_rating_formatted,eoy_rating_clean = rating),
+      by = "userid"
+    )
+
+
+
+
+  # clean everything else
+
   people %>%
     dplyr::left_join(
       config$job_levels %>%
@@ -41,9 +75,9 @@ enrich_people <- function(
     dplyr::left_join(
       config$eoy_rating_levels %>%
         dplyr::select(
-          draft_eoy_rating = name, draft_eoy_rating_order = order
+          eoy_ratings = name, eoy_rating_order = order
         ),
-      by = "draft_eoy_rating"
+      by = c("eoy_rating_clean" = "eoy_ratings")
     )  %>%
     dplyr::mutate(
       month_in_role = round(as.numeric(Sys.Date() - as.Date(started_role))/30.25,1),
@@ -56,8 +90,8 @@ enrich_people <- function(
       job_order, month_in_role
     ) %>%
     dplyr::mutate(
-      draft_eoy_rating_badge = glue::glue(
-        '<span class="right badge badge-secondary" status="secondary">{draft_eoy_rating}</span>'
+      eoy_rating_badge = glue::glue(
+        '<span class="right badge badge-secondary" status="secondary">{eoy_rating}</span>'
       ),
       promotion_badge = dplyr::case_when(
 

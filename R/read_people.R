@@ -77,8 +77,10 @@ hlp_extract_person <- function(manager_data, j, manager){
     started_role = j_all_roles %>%
       dplyr::filter(order == max(order)) %>%
       dplyr::pull(value),
-    draft_eoy_rating = manager_data[[j]]$draft_eoy_rating,
+    eoy_rating = manager_data[[j]]$eoy_rating,
     promotion_readiness = as.character(manager_data[[j]]$promotion_readiness),
+
+    manager = manager,
 
     highlights = list(manager_data[[j]]$highlights),
     key_dev_areas = list(manager_data[[j]]$key_dev_areas)

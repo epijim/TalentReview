@@ -22,7 +22,7 @@ read_config <- function(
     extract_nested()
 
   eoy_rating_levels <- tibble::tibble(
-    name = config$draft_eoy_rating
+    name = config$eoy_rating
     ) %>%
     dplyr::mutate(
       order = dplyr::row_number()

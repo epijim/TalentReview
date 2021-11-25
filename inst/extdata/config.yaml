@@ -3,7 +3,7 @@ job_levels:
   sds: Senior DS
   pds: Principal DS
   eds: Expert DS
-draft_eoy_rating:
+eoy_rating_levels:
   - Needs improvement
   - Adequate
   - Superstar
