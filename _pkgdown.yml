@@ -4,4 +4,24 @@ authors:
     href: https://epijim.uk
 template:
   params:
-    bootswatch: cerulean
+    bootswatch: flatly
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - articles
+    - tutorials
+    - news
+    right: github
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    news:
+      text: Changelog
+      href: news/index.html
