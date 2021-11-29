@@ -1,0 +1,23 @@
+---
+name: License Compliance Check
+
+on:
+  push:
+    branches-ignore: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  license-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: License Report
+        uses: insightsengineering/r-license-report@main
+        with:
+          # Fail the action if 1 or more matching non-compliant licenses are found
+          fail: true
+          # Select an MRAN snapshot date for CRAN dependency metadata retrieval
+          mran_snapshot_date: "2021-06-28"
+          # Select a Bioconductor release version for BioC dependency metadata retrieval
+          bioc_release: "3.12"
