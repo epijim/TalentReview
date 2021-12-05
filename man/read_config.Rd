@@ -4,17 +4,17 @@
 \alias{read_config}
 \title{Read in the formatted 'config' YAML}
 \usage{
-read_config(path = ".", file = "config.yaml")
+read_config(sheet_id)
 }
 \arguments{
 \item{path}{The path to the file of interest. Defaults to current dir.}
 
-\item{file}{This is likely to always be \code{config.yaml}, but I was stuck
+\item{file}{This is likely to always be `config.yaml`, but I was stuck
 between calling it config, and 'lookups' - as initially it only contains
 lookups.
-See the function \code{\link[=enrich_people]{enrich_people()}} to tidy up the data.}
+See the function [enrich_people()] to tidy up the data.}
 }
 \description{
-\code{read_config()} pulls in the config file, that has info like what
+`read_config()` pulls in the config file, that has info like what
 are the different roles, and allowable values for some parameters (for CICD).
 }

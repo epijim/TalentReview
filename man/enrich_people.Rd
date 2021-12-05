@@ -11,9 +11,9 @@ enrich_people(
 )
 }
 \arguments{
-\item{people}{People from the output of \code{\link[=read_people]{read_people()}}.}
+\item{people}{People from the output of [read_people()].}
 
-\item{config}{Config data from \code{\link[=read_config]{read_config()}}.}
+\item{config}{Config data from [read_config()].}
 
 \item{months_in_role_cuts}{Numeric vector of length 2 with cut points for time in role badges.}
 }
@@ -21,6 +21,6 @@ enrich_people(
 Tibble with info per-person. I
 }
 \description{
-\code{enrich_people()} Merge the people and config file outputs from the \code{read_}
+`enrich_people()` Merge the people and config file outputs from the `read_`
 files.
 }

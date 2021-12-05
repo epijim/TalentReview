@@ -1,3 +1,11 @@
+#' Generate a single card
+#'
+#'
+#' @return Tibble with info per-person. I
+#' @export
+#'
+#'
+
 card <- function(
   img, name, job_level,
   highlights_1,highlights_2,highlights_3,
@@ -15,9 +23,6 @@ card <- function(
   # months in role
   if (!is.na(months_in_role)){
 
-
-
-
     if (months_in_role < months_in_role_cuts[1]) {
       badge_colour <- "success"
     } else if (months_in_role < months_in_role_cuts[2]) {
@@ -26,9 +31,25 @@ card <- function(
       badge_colour <- "danger"
     }
 
-    months_in_role_html <- glue::glue(
-      '<span class="right badge badge-{badge_colour}" status="info">{months_in_role} months in role</span>'
+    if (months_in_role > 24) {
+
+      months_in_role_formatted <- paste(round(months_in_role/12,1),"years")
+
+    } else {
+      months_in_role_formatted <-  paste(round(months_in_role,1),"months")
+    }
+
+    months_in_role_formatted <- paste0(
+      months_in_role_formatted," (",
+      format(Sys.Date() - as.numeric(months_in_role)*30, "%b %Y"),
+      ")",
+      collapse = ""
     )
+
+    months_in_role_html <- glue::glue(
+      '<span class="right badge badge-{badge_colour}" status="info">{months_in_role_formatted} in role</span>'
+    )
+
   } else {
     months_in_role_html <- ""
   }
@@ -36,9 +57,9 @@ card <- function(
   # rating
   if (!is.na(rating)){
 
-    if (rating == config$eoy_rating_levels$name[1]) {
+    if (rating == config$eoy_rating_levels$eoy_rating_levels[1]) {
       badge_colour <- "warning"
-    } else if (rating == config$eoy_rating_levels$name[length(config$eoy_rating_levels$name)]) {
+    } else if (rating == config$eoy_rating_levels$eoy_rating_levels[length(config$eoy_rating_levels$eoy_rating_levels)]) {
       badge_colour <- "success"
     } else {
       badge_colour <- "info"
@@ -52,18 +73,18 @@ card <- function(
   }
 
   # promotion
-  if (promotion != "Promotion readiness: NA"){
+  if (promotion != "Not yet") {
 
     promotion_html <- glue::glue(
-      '<span class="right badge badge-primary" status="info">{promotion}</span>'
+      '<span class="right badge badge-primary" status="info">Promotion: {promotion}</span>'
     )
   } else {
     promotion_html <- ""
   }
 
   # Html
-  HTML(
-    glue(
+  clean_html <- HTML(
+    glue::glue(
       '
       <div class="col-sm-4">
       <div class="card bg-{job_colour} card-widget user-card widget-user-2 shiny-bound-input" id="userbox">
@@ -91,7 +112,13 @@ card <- function(
         </div>
         <div class="card-footer">{rating_html} {months_in_role_html} {promotion_html} </div>
       </div>
+      <script type="application/json">xxxxx"collapsible":true,"closable":false,"maximizable":false,"gradient":falsexxxx</script>
       </div>'
     )
   )
+
+  clean_html <- gsub("xxxxx","{",clean_html)
+  clean_html <- gsub("xxxx","}",clean_html)
+
+  clean_html
 }

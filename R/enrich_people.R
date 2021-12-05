@@ -22,81 +22,40 @@ enrich_people <- function(
   if (!class(months_in_role_cuts) == "numeric") stop("months_in_role_cuts should be numeric")
 
 
-  # body
-
-  valid_colours <- config$valid_colours %>%
-    dplyr::slice(1:nrow(config$job_levels)) %>%
-    dplyr::pull(name)
-
-  # tidy ratings
-  people <- people %>%
-    left_join(
-      people %>%
-        dplyr::select(userid, eoy_rating) %>%
-        dplyr::mutate(
-          rating = strsplit(as.character(eoy_rating), "/")
-        ) %>%
-        tidyr::unnest(rating) %>%
-        mutate(trimws(rating)) %>%
-        dplyr::left_join(
-          config$eoy_rating_levels,
-          by = c("rating" = "name")
-        ) %>%
-        dplyr::group_by(userid) %>%
-        dplyr::mutate(
-          rating_average = mean(order)
-        ) %>% dplyr::arrange(desc(order)) %>% dplyr::slice(1) %>%
-        dplyr::mutate(
-          eoy_rating_formatted = dplyr::case_when(
-            order == rating_average ~ rating,
-            order < rating_average ~ paste(rating,"(borderline higher)"), # not posss?
-            order > rating_average ~ paste(rating,"(borderline lower)")
-          )
-        ) %>%
-        select(userid,eoy_rating_formatted,eoy_rating_clean = rating),
-      by = "userid"
-    )
-
-
-
-
-  # clean everything else
-
   people %>%
+    # Job level order
     dplyr::left_join(
       config$job_levels %>%
-        dplyr::mutate(job_colour = valid_colours) %>%
-        dplyr::select(
-          job_level = name, job_level_desc = value,
-          job_colour, job_order = order
+        dplyr::mutate(
+          job_colour = dplyr::case_when(
+            dplyr::row_number() %% 2 == 0 ~ "teal",
+             TRUE ~ "lightblue"
+          )
+          ) %>%
+          dplyr::rename(
+            job_order = order
           ),
-      by = "job_level"
+      by = c("job_level" = "job_levels")
     )  %>%
+    # Eoy rating levels
     dplyr::left_join(
       config$eoy_rating_levels %>%
         dplyr::select(
-          eoy_ratings = name, eoy_rating_order = order
+          eoy_rating_levels, eoy_order = order
         ),
-      by = c("eoy_rating_clean" = "eoy_ratings")
+      by = c("eoy_rating" = "eoy_rating_levels")
     )  %>%
+    # enrich with mutates
     dplyr::mutate(
-      month_in_role = round(as.numeric(Sys.Date() - as.Date(started_role))/30.25,1),
-      promotion = dplyr::case_when(
-        is.null(promotion_readiness) ~ "NA",
-        TRUE ~ paste("Promotion readiness:",promotion_readiness)
-      )
-    ) %>%
-    dplyr::arrange(
-      job_order, month_in_role
+      month_in_role = round(as.numeric(Sys.Date() - as.Date(job_level_since))/30.25,1)
     ) %>%
     dplyr::mutate(
       eoy_rating_badge = glue::glue(
         '<span class="right badge badge-secondary" status="secondary">{eoy_rating}</span>'
       ),
       promotion_badge = dplyr::case_when(
-
         promotion_readiness != "NA" ~ glue::glue(
-          '<span class="right badge badge-danger" status="danger">{promotion}</span>'
+          '<span class="right badge badge-danger" status="danger">Promotion: {promotion_readiness}</span>'
         ),
         TRUE ~ ""
       ),

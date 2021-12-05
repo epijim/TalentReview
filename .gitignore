@@ -1,8 +1,11 @@
 .Rproj.user
-docs
 .Rhistory
 .Rdata
 .httr-oauth
 .DS_Store
+inst/doc
+/doc/
+/Meta/
+secrets
 
-inst/extdata/scratch.R
+rsconnect/connect.apollo.roche.com/blackj9/
