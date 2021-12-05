@@ -15,40 +15,43 @@ app_data <- enrich_people(
 
 #################### Roche ##############################
 
-board <- pins::board_rsconnect(server = "https://connect.apollo.roche.com")
+if (!"location" %in% names(app_data)) {
+  board <- pins::board_rsconnect(server = "https://connect.apollo.roche.com")
 
-app_data <- app_data %>%
-  dplyr::left_join(
-    pins::pin_read(board, "blackj9/dsx_team") %>%
-      dplyr::select(
-        userid = unixid,
-        location = group
-      ),
-    by = "userid"
-  )
-
-
-# add Roche photos (in loop as httr request)
-photos <- NULL
-for(i in app_data$name){
-  photo_url = tolower(i)
-  photo_url = gsub(" ","-",photo_url)
-  photo_url = paste0(
-    "https://pages.github.roche.com/DSX/DSX/author/",photo_url,"/avatar.jpg"
-  )
-
-  # check exists
-  if (httr::http_error(photo_url)) {
-    photo_url <- paste0("https://i.pravatar.cc/150?img=",round(runif(n = 1,0,50)))
-  }
-  photos <- dplyr::bind_rows(
-    tibble::tibble(
-      name = i,
-      photo_url = photo_url
-    ),
-    photos
-  )
+  app_data <- app_data %>%
+    dplyr::left_join(
+      pins::pin_read(board, "blackj9/dsx_team") %>%
+        dplyr::select(
+          userid = unixid,
+          location = group
+        ),
+      by = "userid"
+    )
 }
 
-app_data <- app_data %>%
-  dplyr::left_join(photos, by = "name")
+if (!"photo_url" %in% names(app_data)) {
+  # add Roche photos (in loop as httr request)
+  photos <- NULL
+  for(i in app_data$name){
+    photo_url = tolower(i)
+    photo_url = gsub(" ","-",photo_url)
+    photo_url = paste0(
+      "https://pages.github.roche.com/DSX/DSX/author/",photo_url,"/avatar.jpg"
+    )
+
+    # check exists
+    if (httr::http_error(photo_url)) {
+      photo_url <- paste0("https://i.pravatar.cc/150?img=",round(runif(n = 1,0,50)))
+    }
+    photos <- dplyr::bind_rows(
+      tibble::tibble(
+        name = i,
+        photo_url = photo_url
+      ),
+      photos
+    )
+  }
+
+  app_data <- app_data %>%
+    dplyr::left_join(photos, by = "name")
+}

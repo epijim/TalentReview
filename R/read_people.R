@@ -17,7 +17,8 @@ read_people <- function(
 ){
   googlesheets4::read_sheet(
     sheet_id,
-    sheet = "team_data"
+    sheet = "team_data",
+    col_types = "ccccdcccccccccc"
   ) %>%
   dplyr::mutate(
     job_level_since = as.Date(job_level_since)
