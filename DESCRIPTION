@@ -1,24 +1,42 @@
 Package: TalentReview
-Title: Keep a running set of cards on your team for talent review discussions
-Version: 0.2
-Authors@R: 
-    person(given = "James",
-           family = "Black",
-           role = c("aut", "cre"),
-           email = "james.black.jb2@roche.com")
-Description: Keep a running set of cards on your team for talent review discussions
+Title: TalentReview
+Version: 0.0.0.9000
+Authors@R: person('James', 'Black', email = 'james@epijim.uk', role = c('cre', 'aut'))
+Description: Keep a running set of cards on your team for talent review discussions.
 License: MIT + file LICENSE
+Imports: 
+    attempt,
+    config (>= 0.3.1),
+    dplyr,
+    DT,
+    glue,
+    golem (>= 0.3.1),
+    htmltools,
+    magrittr,
+    ggrepel,
+    waiter,
+    gt,
+    pkgload,
+    googlesheets4,
+    processx,
+    pkgload,
+    pins,
+    ggthemes,
+    rlang,
+    shiny (>= 1.7.1),
+    testthat (>= 3.0.0),
+    tibble,
+    tidyr
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+URL: https://epijim.uk
+BugReports: https://epijim.uk/issues
 Suggests: 
-    dplyr,
-    testthat (>= 3.0.0),
-    yaml
+    rmarkdown,
+    knitr,
+    spelling,
+    covr
 Config/testthat/edition: 3
-Imports: 
-    tibble,
-    magrittr,
-    tidyr,
-    rlang
+Language: en-US
+VignetteBuilder: knitr

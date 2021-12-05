@@ -4,20 +4,20 @@
 \alias{read_people}
 \title{Read in the formatted 'people' YAMLs}
 \usage{
-read_people(path = ".", exclude = c("config.yaml"))
+read_people(sheet_id)
 }
 \arguments{
 \item{path}{The path to the files of interest. Defaults to current dir.}
 
-\item{exclude}{As it pulls all files ending in \code{.yaml}, this lets you
-exclude certain files that don't contain data, like \code{config.yaml}.}
+\item{exclude}{As it pulls all files ending in `.yaml`, this lets you
+exclude certain files that don't contain data, like `config.yaml`.}
 }
 \value{
 Tibble with info per-person. Itemized info, like highlights
 and dev areas are nested vectors within a cell. See
-the function \code{\link[=enrich_people]{enrich_people()}} to tidy up the data.
+the function [enrich_people()] to tidy up the data.
 }
 \description{
-\code{read_people()} allows you to pull in data from the YAML files that
+`read_people()` allows you to pull in data from the YAML files that
 contain info on your team.
 }
