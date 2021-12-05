@@ -13,32 +13,30 @@
 #'
 
 read_config <- function(
-  path = ".",
-  file = "config.yaml"
+  sheet_id
 ){
-  config <- yaml::read_yaml(file.path(path,file))
-
-  job_levels <- config$job_levels %>%
-    extract_nested()
-
-  eoy_rating_levels <- tibble::tibble(
-    name = config$eoy_rating
-    ) %>%
-    dplyr::mutate(
-      order = dplyr::row_number()
-    )
-
-  valid_colours <- tibble::tibble(
-    name = config$valid_colours
-    ) %>%
-    dplyr::mutate(
-      order = dplyr::row_number()
-    )
+  add_order <- function(tibble){
+    tibble %>%
+      dplyr::mutate(order = dplyr::row_number())
+  }
 
   list(
-    "job_levels" = job_levels,
-    "eoy_rating_levels" = eoy_rating_levels,
-    "valid_colours" = valid_colours
+    "grade_levels" = googlesheets4::read_sheet(
+        sheet_id,
+        sheet = "lkp_grade_levels"
+      ) %>% add_order,
+    "job_levels" = googlesheets4::read_sheet(
+      sheet_id,
+      sheet = "lkp_job_levels"
+    ) %>% add_order,
+    "eoy_rating_levels" = googlesheets4::read_sheet(
+      sheet_id,
+      sheet = "lkp_eoy_levels"
+    ) %>% add_order,
+    "eoy_rating_levels" = googlesheets4::read_sheet(
+      sheet_id,
+      sheet = "lkp_promotion_levels"
+    ) %>% add_order
   )
 }
 

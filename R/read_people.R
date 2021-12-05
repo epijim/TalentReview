@@ -13,33 +13,18 @@
 #' @export
 #'
 read_people <- function(
-  path = ".",
-  exclude = c("config.yaml")
+  sheet_id
 ){
-  files <- list.files(
-    path = path,
-    pattern = "\\.yaml$"
+  googlesheets4::read_sheet(
+    sheet_id,
+    sheet = "team_data"
+  ) %>%
+  dplyr::mutate(
+    job_level_since = as.Date(job_level_since)
   )
-
-  files <- setdiff(
-    files,exclude
-  )
-
-  output <- NULL
-  for (file in files) {
-    manager <- gsub(".yaml","",file)
-    manager <- gsub("_"," ",manager)
-    i_manager <- yaml::read_yaml(file.path(path,file))
-    for (person in names(i_manager)) {
-      output <- dplyr::bind_rows(
-        hlp_extract_person(i_manager, person,manager),
-        output
-      )
-    }
-  }
-
-  output
 }
+
+
 
 #' Take person from list
 #'
