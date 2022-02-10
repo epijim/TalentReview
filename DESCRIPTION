@@ -1,6 +1,6 @@
 Package: TalentReview
 Title: TalentReview
-Version: 0.0.0.9000
+Version: 0.3
 Authors@R: person('James', 'Black', email = 'james@epijim.uk', role = c('cre', 'aut'))
 Description: Keep a running set of cards on your team for talent review discussions.
 License: MIT + file LICENSE
